@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="utf-8">
+	<link type="text/css" rel="stylesheet" href="css/bootstrap.css" />
+	<script src="js/jquery.js" type="text/javascript"></script>
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+  	<link href="http://fonts.googleapis.com/css?family=Montserrat:400,700,inherit,400" rel="stylesheet" type="text/css">	
+  	<link rel="stylesheet" href="css/main.css">
+
+	</style>
+	<script>
+		var openWeatherAppId = 'b192e697822c8df3931e14f3957a364c',
+		  openWeatherUrl = 'http://api.openweathermap.org/data/2.5/forecast'
+
+		var prepareData = function(units) {
+			var cityName = $('#city-name').val()
+			if (cityName && cityName != ''){
+				cityName = cityName.trim()
+				getData(openWeatherUrl, cityName, openWeatherAppId, units)
+			}
+			else {
+				alert('Please enter the city name')
+			}
+		}
+		$(document).ready(function(){
+			$('.buttonSubmit').click(function() {
+				prepareData('metric')
+			})
+
+		})
+		function getData (url, cityName, appId, units) {
+			var request = $.ajax({
+				url: url,
+				dataType: "jsonp",
+				data: {q: cityName, appid: appId, units: units},
+				jsonpCallback: "fetchData",
+				type: "GET"
+
+			}).fail(function(error){
+				console.error(error)
+				alert('Error sending request')
+			})
+		}
+		function fetchData (forecast) {
+			console.log(forecast)
+			var html = '',
+			  cityName = forecast.city.name,
+				country = forecast.city.country
+
+			html += '<h2> Weather Forecast for ' + cityName + ', ' + country + '</h2>'
+			forecast.list.forEach(function(forecastEntry, index, list){
+				html += '<p>' + forecastEntry.dt_txt + ': ' + forecastEntry.main.temp + '</p>'
+			})
+
+			$('#log').html(html)
+		}
+	</script>
+</head>
+<body>
+
+<div class="jumbotron">
+	<div class="container">
+		<div class="row">
+			<div class="span4 offset 3">
+				<div id= "site_name">
+					<h1>Weather Forecast System</h1>
+					
+					</div>
+					<hr id="line">
+					<nav id="top_menu">
+						<ul>
+							
+							<li style="cursor: pointer; cursor: hand;">Towns & Cities</li> <img src="photos/home.jpg"> 
+							&emsp;
+							<li style="cursor: pointer; cursor: hand;">Rural</li><img src="photos/calendar.jpg">
+							&emsp;
+							<li style="cursor: pointer; cursor: hand;">Warnings</li><img src="photos/help.jpg">
+							&emsp;
+						</ul>
+					</nav>
+					<hr id="line">
+			<p id="syntax">Please enter a city name to display the weather forecast for the next 4 days:</p>
+			</div>
+			<div class="span6  offset1"><input class="span4" type="text" placeholder="Enter a city" id="city-name" value=""/>
+			</div>
+
+		</div>
+		<div class="row">
+			<div class="span6 offset1"><input type="button" class="btn buttonSubmit" value="Get your Forecast"/></div>
+			
+			</div>			
+		</div>
+
+		<div class="row">
+			<div class="span6 offset1">
+				<div id="log">No results Yet</div>
+			</div>
+		</div>
+			<aside id="aside"> 					
+			<img src='photos/cloud.jpg' alt='missing' >															
+		</aside>
+		</div>
+		
+		<hr id="line">
+	</div>
+
+</body>
+</html>
