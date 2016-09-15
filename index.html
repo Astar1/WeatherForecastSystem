@@ -9,52 +9,70 @@
   	<link rel="stylesheet" href="css/main.css">
 
 	</style>
+	<script type="text/javascript">
+			  var appInsights=window.appInsights||function(config){
+				function i(config){t[config]=function(){var i=arguments;t.queue.push(function(){t[config].apply(t,i)})}}var t={config:config},u=document,e=window,o="script",s="AuthenticatedUserContext",h="start",c="stop",l="Track",a=l+"Event",v=l+"Page",y=u.createElement(o),r,f;y.src=config.url||"https://az416426.vo.msecnd.net/scripts/a/ai.0.js";u.getElementsByTagName(o)[0].parentNode.appendChild(y);try{t.cookie=u.cookie}catch(p){}for(t.queue=[],t.version="1.0",r=["Event","Exception","Metric","PageView","Trace","Dependency"];r.length;)i("track"+r.pop());return i("set"+s),i("clear"+s),i(h+a),i(c+a),i(h+v),i(c+v),i("flush"),config.disableExceptionTracking||(r="onerror",i("_"+r),f=e[r],e[r]=function(config,i,u,e,o){var s=f&&f(config,i,u,e,o);return s!==!0&&t["_"+r](config,i,u,e,o),s}),t
+				}({
+					instrumentationKey:"7c55fbe5-6979-4190-a34b-7bf15b58c1dc"
+				});
+				   
+				window.appInsights=appInsights;
+				appInsights.trackPageView();
+	</script>
 	<script>
-		var openWeatherAppId = 'b192e697822c8df3931e14f3957a364c',
-		  openWeatherUrl = 'http://api.openweathermap.org/data/2.5/forecast'
+		<!-- 
+			To collect end-user usage analytics about your application, 
+			insert the following script into each page you want to track.
+			Place this code immediately before the closing  tag,
+			and before any other scripts. Your first data will appear 
+			automatically in just a few seconds.
+			-->
+			
+				var openWeatherAppId = 'b192e697822c8df3931e14f3957a364c',
+				  openWeatherUrl = 'http://api.openweathermap.org/data/2.5/forecast'
 
-		var prepareData = function(units) {
-			var cityName = $('#city-name').val()
-			if (cityName && cityName != ''){
-				cityName = cityName.trim()
-				getData(openWeatherUrl, cityName, openWeatherAppId, units)
-			}
-			else {
-				alert('Please enter the city name')
-			}
-		}
-		$(document).ready(function(){
-			$('.buttonSubmit').click(function() {
-				prepareData('metric')
-			})
+				var prepareData = function(units) {
+					var cityName = $('#city-name').val()
+					if (cityName && cityName != ''){
+						cityName = cityName.trim()
+						getData(openWeatherUrl, cityName, openWeatherAppId, units)
+					}
+					else {
+						alert('Please enter the city name')
+					}
+				}
+				$(document).ready(function(){
+					$('.buttonSubmit').click(function() {
+						prepareData('metric')
+					})
 
-		})
-		function getData (url, cityName, appId, units) {
-			var request = $.ajax({
-				url: url,
-				dataType: "jsonp",
-				data: {q: cityName, appid: appId, units: units},
-				jsonpCallback: "fetchData",
-				type: "GET"
+				})
+				function getData (url, cityName, appId, units) {
+					var request = $.ajax({
+						url: url,
+						dataType: "jsonp",
+						data: {q: cityName, appid: appId, units: units},
+						jsonpCallback: "fetchData",
+						type: "GET"
 
-			}).fail(function(error){
-				console.error(error)
-				alert('Error sending request')
-			})
-		}
-		function fetchData (forecast) {
-			console.log(forecast)
-			var html = '',
-			  cityName = forecast.city.name,
-				country = forecast.city.country
+					}).fail(function(error){
+						console.error(error)
+						alert('Error sending request')
+					})
+				}
+				function fetchData (forecast) {
+					console.log(forecast)
+					var html = '',
+					  cityName = forecast.city.name,
+						country = forecast.city.country
 
-			html += '<h2> Weather Forecast for ' + cityName + ', ' + country + '</h2>'
-			forecast.list.forEach(function(forecastEntry, index, list){
-				html += '<p>' + forecastEntry.dt_txt + ': ' + forecastEntry.main.temp + '</p>'
-			})
+					html += '<h2> Weather Forecast for ' + cityName + ', ' + country + '</h2>'
+					forecast.list.forEach(function(forecastEntry, index, list){
+						html += '<p>' + forecastEntry.dt_txt + ': ' + forecastEntry.main.temp + '</p>'
+					})
 
-			$('#log').html(html)
-		}
+					$('#log').html(html)
+				}
 	</script>
 </head>
 <body>
