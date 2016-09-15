@@ -20,59 +20,51 @@
 			appInsights.trackPageView();
 	</script>
 	<script>
-		<!-- 
-			To collect end-user usage analytics about your application, 
-			insert the following script into each page you want to track.
-			Place this code immediately before the closing  tag,
-			and before any other scripts. Your first data will appear 
-			automatically in just a few seconds.
-			-->
-			
-				var openWeatherAppId = 'b192e697822c8df3931e14f3957a364c',
-				  openWeatherUrl = 'http://api.openweathermap.org/data/2.5/forecast'
+		var openWeatherAppId = 'b192e697822c8df3931e14f3957a364c',
+		  openWeatherUrl = 'http://api.openweathermap.org/data/2.5/forecast'
 
-				var prepareData = function(units) {
-					var cityName = $('#city-name').val()
-					if (cityName && cityName != ''){
-						cityName = cityName.trim()
-						getData(openWeatherUrl, cityName, openWeatherAppId, units)
-					}
-					else {
-						alert('Please enter the city name')
-					}
-				}
-				$(document).ready(function(){
-					$('.buttonSubmit').click(function() {
-						prepareData('metric')
-					})
+		var prepareData = function(units) {
+			var cityName = $('#city-name').val()
+			if (cityName && cityName != ''){
+				cityName = cityName.trim()
+				getData(openWeatherUrl, cityName, openWeatherAppId, units)
+			}
+			else {
+				alert('Please enter the city name')
+			}
+		}
+		$(document).ready(function(){
+			$('.buttonSubmit').click(function() {
+				prepareData('metric')
+			})
 
-				})
-				function getData (url, cityName, appId, units) {
-					var request = $.ajax({
-						url: url,
-						dataType: "jsonp",
-						data: {q: cityName, appid: appId, units: units},
-						jsonpCallback: "fetchData",
-						type: "GET"
+		})
+		function getData (url, cityName, appId, units) {
+			var request = $.ajax({
+				url: url,
+				dataType: "jsonp",
+				data: {q: cityName, appid: appId, units: units},
+				jsonpCallback: "fetchData",
+				type: "GET"
 
-					}).fail(function(error){
-						console.error(error)
-						alert('Error sending request')
-					})
-				}
-				function fetchData (forecast) {
-					console.log(forecast)
-					var html = '',
-					  cityName = forecast.city.name,
-						country = forecast.city.country
+			}).fail(function(error){
+				console.error(error)
+				alert('Error sending request')
+			})
+		}
+		function fetchData (forecast) {
+			console.log(forecast)
+			var html = '',
+			  cityName = forecast.city.name,
+				country = forecast.city.country
 
-					html += '<h2> Weather Forecast for ' + cityName + ', ' + country + '</h2>'
-					forecast.list.forEach(function(forecastEntry, index, list){
-						html += '<p>' + forecastEntry.dt_txt + ': ' + forecastEntry.main.temp + '</p>'
-					})
+			html += '<h2> Weather Forecast for ' + cityName + ', ' + country + '</h2>'
+			forecast.list.forEach(function(forecastEntry, index, list){
+				html += '<p>' + forecastEntry.dt_txt + ': ' + forecastEntry.main.temp + '</p>'
+			})
 
-					$('#log').html(html)
-				}
+			$('#log').html(html)
+		}
 	</script>
 </head>
 <body>
