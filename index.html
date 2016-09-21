@@ -34,7 +34,7 @@
 			}
 		}
 		$(document).ready(function(){
-			$('.buttonSubmit').click(function() {
+			$('.button').click(function() {
 				prepareData('metric')
 			})
 
@@ -58,9 +58,9 @@
 			  cityName = forecast.city.name,
 				country = forecast.city.country
 
-			html += '<h2> Weather Forecast for ' + cityName + ', ' + country + '</h2>'
+			html += '<h1 style="color: #FFF";> Weather Forecast for ' + cityName + ', ' + country + '</h1>'
 			forecast.list.forEach(function(forecastEntry, index, list){
-				html += '<p>' + forecastEntry.dt_txt + ': ' + forecastEntry.main.temp + '</p>'
+				html += '<p>' +"Date & Time: " + forecastEntry.dt_txt + ': '  + forecastEntry.main.temp + " degrees" + '</p>'
 			})
 
 			$('#log').html(html)
@@ -97,14 +97,14 @@
 
 		</div>
 		<div class="row">
-			<div class="span6 offset1"><input type="button" class="btn buttonSubmit" value="Get your Forecast"/></div>
+			<div class="span6 offset1"><input type="button" class="button" value="Get your Forecast"/></div>
 			
 			</div>			
 		</div>
 
 		<div class="row">
 			<div class="span6 offset1">
-				<div id="log">No results Yet</div>
+				<div id="log" style = "color:#FFF";>No results Yet</div>
 			</div>
 		</div>
 			<aside id="aside"> 					
