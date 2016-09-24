@@ -22,7 +22,6 @@
 	<script>
 		var openWeatherAppId = 'b192e697822c8df3931e14f3957a364c',
 		  openWeatherUrl = 'http://api.openweathermap.org/data/2.5/forecast'
-
 		var prepareData = function(units) {
 			var cityName = $('#city-name').val()
 			if (cityName && cityName != ''){
@@ -37,7 +36,6 @@
 			$('.button').click(function() {
 				prepareData('metric')
 			})
-
 		})
 		function getData (url, cityName, appId, units) {
 			var request = $.ajax({
@@ -46,7 +44,6 @@
 				data: {q: cityName, appid: appId, units: units},
 				jsonpCallback: "fetchData",
 				type: "GET"
-
 			}).fail(function(error){
 				console.error(error)
 				alert('Error sending request')
@@ -57,12 +54,11 @@
 			var html = '',
 			  cityName = forecast.city.name,
 				country = forecast.city.country
-
 			html += '<h1 style="color: #FFF";> Weather Forecast for ' + cityName + ', ' + country + '</h1>'
+			html += '<p style="font-size: 20px;color:yellow;">&emsp;&emsp;Date' + '&emsp;&emsp;'+  '&emsp;Time'+   '&emsp;&emsp;'+'Degrees' + '</p>'
 			forecast.list.forEach(function(forecastEntry, index, list){
-				html += '<p>' +"Date & Time: " + forecastEntry.dt_txt + ': '  + forecastEntry.main.temp + " degrees" + '</p>'
+				html += '<p>'  + forecastEntry.dt_txt + ';&emsp;'  + forecastEntry.main.temp  +  "°" + '</p>'
 			})
-
 			$('#log').html(html)
 		}
 	</script>
@@ -74,11 +70,12 @@
 		<div class="row">
 			<div class="span4 offset 3">
 				<div id= "site_name">
-					<h1>Weather Forecast System</h1>
+					<h1 style="color:yellow;">Weather Forecast System</h1>
 					
 					</div>
-					<hr id="line">
-					<nav id="top_menu">
+					
+					<!---<hr id="line">
+						<nav id="top_menu">
 						<ul>
 							
 							<li style="cursor: pointer; cursor: hand;">Towns & Cities</li> <img src="photos/home.jpg"> 
@@ -89,7 +86,7 @@
 							&emsp;
 						</ul>
 					</nav>
-					<hr id="line">
+					<hr id="line"> --->
 			<p id="syntax">Please enter a city name to display the weather forecast for the next 4 days:</p>
 			</div>
 			<div class="span6  offset1"><input class="span4" type="text" placeholder="Enter a city" id="city-name" value=""/>
