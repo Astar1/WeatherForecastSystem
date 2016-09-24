@@ -57,7 +57,7 @@
 			html += '<h1 style="color: #FFF";> Weather Forecast for ' + cityName + ', ' + country + '</h1>'
 			html += '<p style="font-size: 20px;color:yellow;">&emsp;&emsp;Date' + '&emsp;&emsp;'+  '&emsp;Time'+   '&emsp;&emsp;'+'Degrees' + '</p>'
 			forecast.list.forEach(function(forecastEntry, index, list){
-				html += '<p>'  + forecastEntry.dt_txt + ';&emsp;'  + forecastEntry.main.temp  +  "°" + '</p>'
+				html += '<p>'  + forecastEntry.dt_txt + ':&emsp;'  + forecastEntry.main.temp  +  "°" + '</p>'
 			})
 			$('#log').html(html)
 		}
